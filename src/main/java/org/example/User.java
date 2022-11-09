@@ -3,9 +3,9 @@ package org.example;
 import java.time.LocalTime;
 
 public class User {
-    public LocalTime getDndStart() {
+    public void getDndStart() {
     }
 
-    public LocalTime getDndEnd() {
+    public void getDndEnd() {
     }
 }
