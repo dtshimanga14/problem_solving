@@ -158,9 +158,30 @@ public class Main {
 //        findLowestPrice(products,discounts);
 //        System.out.println(findLowestPrice(products,discounts));
         //Arrays integers
-        System.out.println(longestSeqInt());
+        System.out.println(longestSubstringPalindrome("rhelleoq"));
     }
+    public static int longestSubstringPalindrome(String s){
 
+        if(s.length() <= 1 ||isPalindrome(s))
+            return s.length();
+        int max1 = longestSubstringPalindrome(s.substring(0,s.length()-1));
+        int max2 = lengthOfLongestSubstring(s.substring(1));
+
+        return Math.max(max1,max2);
+    }
+    public static String printOddAndEven(String str){
+
+        StringBuilder str1 = new StringBuilder();
+        StringBuilder str2 = new StringBuilder();
+        int strLen = str.length();
+
+        for(int i = 0; i < strLen; i++){
+            if(i%2 == 0)
+                str1.append(str.charAt(i));
+            else str2.append(str.charAt(i));
+        }
+        return str1.append(" ").append(str2).toString();
+    }
     public static int longestSeqInt(int arr[]){
         int max  = Integer.MIN_VALUE;
         return helper(arr,0,0,max);
