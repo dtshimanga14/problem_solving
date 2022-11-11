@@ -139,8 +139,8 @@ public class Main {
         int capacity = 50;
 //        int dp[] = new int[capacity+1];
 //        System.out.println(knapSackFirstBottomUp(profits,weights,capacity));
-        int[][] nQueens = Nqueens(5);
-        printArray2D(nQueens);
+//        int[][] nQueens = Nqueens(5);
+//        printArray2D(nQueens);
 
 //        List<String> prod1 = new ArrayList<>(){{ add("10");add("d0");add("d1"); }};
 //        List<String> prod2 = Arrays.asList("15","EMPTY","EMPTY");
@@ -158,16 +158,32 @@ public class Main {
 //        findLowestPrice(products,discounts);
 //        System.out.println(findLowestPrice(products,discounts));
         //Arrays integers
-        System.out.println(longestSubstringPalindrome("rhelleoq"));
+        Map<Integer,String> map = new HashMap<>();
+        longestSubstringPalindrome("rhelleoq",map);
+        System.out.println(map);
+        System.out.println(pangram("rhelleoq"));
     }
-    public static int longestSubstringPalindrome(String s){
+    public static List<Character> pangram(String s) {
+        int arr[] = new int[26];
+        int sLen = s.length();
+        for(int i = 0; i < sLen; i++) {
+            arr[(s.charAt(i)-'a')]++;
+        }
+        List<Character> result = new ArrayList<>();
+        for(int i = 0; i < 26; i++){
+            if(arr[i] == 0)
+                result.add((char)(i+97));
+        }
+        return result;
+    }
+    public static void longestSubstringPalindrome(String s, Map<Integer,String> map){
+        if(s.length() == 0) return;
+        if(s.length() == 1 ||isPalindrome(s)) {
+            map.put(s.length(),s);
+        }
+        longestSubstringPalindrome(s.substring(0,s.length()-1),map);
+        longestSubstringPalindrome(s.substring(1),map);
 
-        if(s.length() <= 1 ||isPalindrome(s))
-            return s.length();
-        int max1 = longestSubstringPalindrome(s.substring(0,s.length()-1));
-        int max2 = lengthOfLongestSubstring(s.substring(1));
-
-        return Math.max(max1,max2);
     }
     public static String printOddAndEven(String str){
 
