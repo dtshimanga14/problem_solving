@@ -7,9 +7,49 @@ import java.util.stream.Stream;
 public class Mroads {
     public static void main(String[] args) {
         System.out.println(groupAnagramm(Arrays.asList("eat", "tea", "ate", "bat", "tab", "nab")));
-        System.out.println(getLongestUniformSubStr("aabbcccccccc"));
+        int arr[] = {13,4,5,3,0,12};
+        String str = "geeksforgeeks";
+        int index = firstNonRepeatedChar(str);
+        System.out.println(str.charAt(index));
 
     }
+    //First Non-Repeated Character in the string
+    public static int firstNonRepeatedChar(String s){
+        int sLen = s.length();
+        int arr[] = new int[26];
+
+        for(int i = 0; i < sLen; i++)
+            arr[s.charAt(i)-'a']++;
+
+        for(int i = 0; i < sLen; i++) {
+            if(arr[s.charAt(i)-'a'] == 1)
+                return i;
+        }
+        return -1;
+    }
+    public static int secondSmallest(int arr[]) {
+        int arrLen = arr.length;
+        //[2,2,4,5,0,12]
+        for(int i = 1; i < arrLen; i++){
+            int j = i-1; int temp = arr[i];
+            for(; j >= 0 && arr[j] > temp;j--)
+                arr[j+1] = arr[j];
+            arr[j] = temp;
+        }
+//        for(int i = 0; i < arrLen; i++){
+//            for(int j = 0; j < arrLen-1-i;j++) {
+//                if(arr[j] > arr[j+1])
+//                    swap(arr,j,j+1);
+//            }
+//        }
+        return arr[1];
+    }
+    public static void swap(int arr[], int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    // Longest uniform substrings
     public static List<Integer> getLongestUniformSubStr(String s) {
 
         int sLen = s.length();
@@ -83,5 +123,16 @@ public class Mroads {
             left++; right--;
         }
         return true;
+    }
+    //Reversing  String
+    public static String reverse(String s){
+
+        StringBuilder str = new StringBuilder();
+        int strLen = s.length();
+
+        for(int i = strLen-1; i >= 0; i--)
+            str.append(s.charAt(i));
+
+        return str.toString();
     }
 }
