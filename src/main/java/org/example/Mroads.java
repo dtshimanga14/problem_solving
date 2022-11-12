@@ -1,27 +1,45 @@
 package org.example;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Mroads {
     public static void main(String[] args) {
-        System.out.println(groupAnagramm(Arrays.asList("eat", "tea", "ate", "bat", "tab", "nab")));
-        int arr[] = {13,4,5,3,0,12};
+        //System.out.println(groupAnagramm(Arrays.asList("eat", "tea", "ate", "bat", "tab", "nab")));
 
 //        String str = "geeksforgeeks";
 //        int index = firstNonRepeatedChar(str);
 //        System.out.println(str.charAt(index));
-//        System.out.println(secondSmallest(arr));
 //        String s[][] = {{"Mark", "70"}, {"Alex", "60"}, {"Alex", "62"}, {"Stephen", "75"}};
 //
 //
 //        //System.out.println(bestAverage(s)[0] + " : " + bestAverage(s)[1]);
 //        System.out.println(findMissingLetters("daniel kassampu tshimanga"));
-        int arr1[] = {1,2}; int arr2[] = {3,4};
-        double res = medianOfTwoArray(arr2,arr1);
-        System.out.println(isPower(2,5));
-        System.out.println(factorPrimeNumber(9));
+//        int arr1[] = {1,2}; int arr2[] = {3,4};
+//        double res = medianOfTwoArray(arr2,arr1);
+//        System.out.println(isPower(2,5));
+//        System.out.println(factorPrimeNumber(9));
+//
+//        Map<Integer,String> map1 = new HashMap<>();
+//        Map<Integer,String> map = Collections.synchronizedMap(map1);
+//
+//        map.put(12,null);
+        int arr[] = {13,4,5,1,2,12};
+        //int arr[] = {1,2,13,4,5,12};
+        System.out.println(secondSmallest(arr,6));
+    }
+    public static int secondSmallest(int arr[], int k) {
+        int arrLen = arr.length;
+        loop : for(int i = 0; i < arrLen; i++){
+            for(int j = arrLen-1; j >= i; j--){
+                if(i == k) break loop;
+                if(j-1 >= 0 && arr[j-1] > arr[j])
+                    swap(arr,j-1,j);
+            }
+        }
+        return arr[k-1];
     }
     public static List<Integer> factorPrimeNumber(int n) {
         int num = n;
@@ -158,23 +176,7 @@ public class Mroads {
         }
         return -1;
     }
-    public static int secondSmallest(int arr[]) {
-        int arrLen = arr.length;
-        //[2,2,4,5,0,12]
-//        for(int i = 1; i < arrLen; i++){
-//            int j = i-1; int temp = arr[i];
-//            for(; j >= 0 && arr[j] > temp;j--)
-//                arr[j+1] = arr[j];
-//            arr[j] = temp;
-//        }
-        for(int i = 0; i < arrLen; i++){
-            for(int j = 0; j < arrLen-1-i;j++) {
-                if(arr[j] > arr[j+1])
-                    swap(arr,j,j+1);
-            }
-        }
-        return arr[1];
-    }
+
     public static void swap(int arr[], int i, int j){
         int temp = arr[i];
         arr[i] = arr[j];
