@@ -28,7 +28,49 @@ public class Mroads {
 //        map.put(12,null);
         int arr[] = {13,4,5,1,2,12};
         //int arr[] = {1,2,13,4,5,12};
-        System.out.println(secondSmallest(arr,6));
+        //[(1,5,20), (3,8,15),(7,10,8)]
+        List<Integer> sch1 = Arrays.asList(1,5,20);
+        List<Integer> sch2 = Arrays.asList(3,8,15);
+        List<Integer> sch3 = Arrays.asList(7,10,8);
+
+        List<List<Integer>> prices = new ArrayList<>(){{
+            add(sch1); add(sch2); add(sch3);
+        }};
+        System.out.println(cheapestPrice(prices));
+    }
+    public static List<List<Integer>> cheapestPrice(List<List<Integer>> prices) {
+        Collections.sort(prices,(a,b)-> a.get(0) - b.get(0));
+        List<List<Integer>> result = new ArrayList<>(); int size = prices.size();
+        Map<Integer,Integer> bestPrices = new HashMap<>();
+
+        for(int i = 0; i < size; i++){
+            int start = prices.get(i).get(0);
+            int end =  prices.get(i).get(1);
+            int price = prices.get(i).get(2);
+
+            for(int j = start; j <= end; j++) {
+                if(!bestPrices.containsKey(j) ||
+                (bestPrices.containsKey(j) && bestPrices.get(j) > price) )
+                    bestPrices.put(j,price);
+            }
+        }
+        for(int i = 0; i < size-1; i++){
+            List<Integer> temp = new ArrayList<>();
+            int start = prices.get(i).get(0);
+            temp.add(start);
+            int end = Math.min(prices.get(i+1).get(0),prices.get(i).get(1));
+            temp.add(end);
+            temp.add(bestPrices.get(start));
+            result.add(temp);
+        }
+
+        List<Integer> temp = new ArrayList<>();
+        int start = Math.min(prices.get(size-1).get(0),prices.get(size-2).get(1));
+        int end = prices.get(size-1).get(1);
+        temp.add(end);  temp.add(bestPrices.get(start)); temp.add(start);
+        result.add(temp);
+
+        return result;
     }
     public static int secondSmallest(int arr[], int k) {
         int arrLen = arr.length;
