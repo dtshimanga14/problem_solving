@@ -10,50 +10,37 @@ public class Mroads {
     public static void main(String[] args) {
         //System.out.println(groupAnagramm(Arrays.asList("eat", "tea", "ate", "bat", "tab", "nab")));
 
-//        String str = "geeksforgeeks";
-//        int index = firstNonRepeatedChar(str);
-//        System.out.println(str.charAt(index));
-//        String s[][] = {{"Mark", "70"}, {"Alex", "60"}, {"Alex", "62"}, {"Stephen", "75"}};
-//
-//
-//        //System.out.println(bestAverage(s)[0] + " : " + bestAverage(s)[1]);
-//        System.out.println(findMissingLetters("daniel kassampu tshimanga"));
-//        int arr1[] = {1,2}; int arr2[] = {3,4};
-//        double res = medianOfTwoArray(arr2,arr1);
-//        System.out.println(isPower(2,5));
-//        System.out.println(factorPrimeNumber(9));
-//
-//        Map<Integer,String> map1 = new HashMap<>();
-//        Map<Integer,String> map = Collections.synchronizedMap(map1);
-//
-//        map.put(12,null);
-        //int arr[] = {1,2,13,4,5,12};
-        //[(1,5,20), (3,8,15),(7,10,8)]
-        List<Integer> sch1 = Arrays.asList(1,5,20);
-        List<Integer> sch2 = Arrays.asList(3,8,15);
-        List<Integer> sch3 = Arrays.asList(7,10,8);
-
-        List<List<Integer>> prices = new ArrayList<>(){{
-            add(sch1); add(sch2); add(sch3);
-        }};
-        int arr[] = {13,4,5,1,2,12,12,12,4,5,2};
-        int coins[] = {1,4,3,2};
-//        System.out.println(cheapestPrice(prices));
-//        System.out.println(commonWord("hello world hello world world world"));
-//        System.out.println(leastRecentOccurence(arr));
-//        System.out.println(changeCoin(coins,7));
-//        StringBuilder s = new StringBuilder("hello");
-//        System.out.println(shortestPalindrome("helzoz"));
-//        //  menm
-//        System.out.println(removeDuplicate(arr));
-//        WeightedGraph weightedGraph = new WeightedGraph();
-//        WeightedGraph.Vertex v1 = new WeightedGraph.Vertex("USD");
-//        WeightedGraph.Vertex v2 = new WeightedGraph.Vertex("INR");
-//        v1.addEdge(v2,12.0);
-        printArray(pascalTriangle(4));
+        System.out.println(EditDistance("wade","fade"));
     }
+    public static int EditDistance(String s1, String s2){
+        //Distance between two strings
+//        Levenshtein distance, like Hamming distance, is the smallest number of edit operations required
+//        to transform one string into the other.
+//        Given two strings, the Levenshtein distance between them is the minimum
+//        number of single-character edits (insertions, deletions, or substitutions) required to change
+//        one string into the other.
 
+        int comChar = commonChars(s1,s2);
+        int s1Len = s1.length(); int s2Len = s2.length();
+        int res = s1Len-comChar + s2Len-comChar;
+        return res;
+    }
+    public static int commonChars(String s1, String s2){
+        return commonCharsHelper(s1,s2,0,0,0);
+    }
+    public static int commonCharsHelper(String s1, String s2, int index1, int index2,int count){
+        if(index1 >= s1.length() || index2 >= s2.length())
+            return count;
+        if(s1.charAt(index1) == s2.charAt(index2))
+            return commonCharsHelper(s1,s2,index1+1,index2+1,count+1);
+        int count1 = commonCharsHelper(s1,s2,index1,index2+1,count);
+        int count2 = commonCharsHelper(s1,s2,index1+1,index2,count);
+
+        return Math.max(count1,count2);
+
+    }
     public static int[][] pascalTriangle(int n){
+//        ii.  Pascals Triangle Implementation
         int arr[][] = new int[n+1][n+1];
         for(int i = 0; i <= n; i++){
             for(int j = 0; j <= i; j++){
@@ -75,6 +62,7 @@ public class Mroads {
         return arr[n];
     }
     public static List<Integer> removeDuplicate(int arr[]){
+        //Remove duplicate from an array
         Set<Integer> set = new HashSet<>();
         List<Integer> result = new ArrayList<>();
         int arrLen = arr.length;
@@ -144,21 +132,6 @@ public class Mroads {
               }
           }
           return word;
-//        String sArray[] = s.split(" ");
-//        Map<String,List<String>> res =
-//         Stream.of(sArray).collect(Collectors.groupingBy(e-> (String)e));
-//        String result = "";
-//
-//        System.out.println(res);
-//        int max = Integer.MIN_VALUE;
-//        for(Map.Entry<String,List<String>> e : res.entrySet()) {
-//            int size = e.getValue().size();
-//            if(size > max) {
-//                result = e.getKey();  max = size;
-//                System.out.println(result + " : "+ max);
-//            }
-//        }
-//        return result;
     }
     public static int changeCoin(int coins[], int amount){
         int dp[] = new int[amount+1]; int coinsLen = coins.length;
@@ -172,6 +145,10 @@ public class Mroads {
         return dp[amount];
     }
     public static List<List<Integer>> cheapestPrice(List<List<Integer>> prices) {
+//        Find the cheapest price. Prices are given as intervals: (start-time, end-time, price)
+//        [(1,5,20), (3,8,15),(7,10,8)]
+//        Result: [(1,3,20), (3,7,15),(7,10,8)]
+
         Collections.sort(prices,(a,b)-> a.get(0) - b.get(0));
         List<List<Integer>> result = new ArrayList<>(); int size = prices.size();
         Map<Integer,Integer> bestPrices = new HashMap<>();
@@ -206,6 +183,7 @@ public class Mroads {
         return result;
     }
     public static int secondSmallest(int arr[], int k) {
+        //Find the second small element
         int arrLen = arr.length;
         loop : for(int i = 0; i < arrLen; i++){
             for(int j = arrLen-1; j >= i; j--){
@@ -241,6 +219,7 @@ public class Mroads {
     }
 
     public static String runLengthEncoding(String s){
+        //xiii. Run Length Encoding
         int sLen = s.length(); StringBuilder str = new StringBuilder();
         int i = 0;
         while(i < sLen){
@@ -254,6 +233,7 @@ public class Mroads {
         return str.toString();
     }
     public static String runLengthDecoding(String s){
+        //xiii. Run Length decoding
         StringBuilder str = new StringBuilder();
         int sLen = s.length();
         for(int i = 0; i < sLen; i = i+2){
@@ -267,6 +247,7 @@ public class Mroads {
     }
     //Is n power of k
     public static boolean isPower(int n, int k){
+        //Is power of 10
         if(n == k) return true;
         //if(n == 0 && k != 0) return false;
         int prod = n; int exp =1;
@@ -277,6 +258,7 @@ public class Mroads {
     }
     //Square Root calculator
     public static int squareRoot(int n){
+        // xii. Square Root calculator
         if(n == 0 || n == 1) return n;
         int i = 1; int result = 1;
         while (result <= n){
@@ -285,6 +267,7 @@ public class Mroads {
         return i-1;
     }
     public static double medianOfTwoArray(int arr1[], int arr2[]) {
+        //Median Two Sorted Arrays.
         Arrays.sort(arr1); Arrays.sort(arr2);
         int arrLen1 = arr1.length; int arrLen2 = arr2.length;
         int m = 0; int n = 0;
@@ -304,6 +287,8 @@ public class Mroads {
           (arr[(totalLen/2)-1] + arr[(totalLen/2)])/2 : arr[(totalLen/2)];
     }
     public static List<Character> findMissingLetters(String s){
+        //find Missing letters (from a given sentence we need to find missing characters)
+
          int sLen = s.length();
         String str[] = s.split(" ");
         StringBuilder nStr = new StringBuilder();
@@ -326,6 +311,10 @@ public class Mroads {
         return list;
     }
     public static String [] bestAverage(String [][] students) {
+//        8. From a two-dimensional array containing student names and their grades,
+//        find the average grades ( Best Average Problem)
+//        input: [["Mark", "70"], ["Alex", "60"], ["Alex", "62"], ["Stephen", "75"]
+//        output: ["Stephen", "75"]
         int len = students.length;
         int max = Integer.valueOf(students[0][1]);
         int best = 0;
@@ -336,6 +325,26 @@ public class Mroads {
         }
 
         return students[best];
+    }
+    public static char firstUniqueCharacter(String s){
+//        4. For a given string, find the first unique character. I gave 2 solutions
+//        a.with extra space, linear time
+//        b.no extra space, but in quadratic time.
+
+        int alphabet[] = new int[26];
+        String str = s.toLowerCase();
+        int sLen = s.length(); int index = -1;
+
+        for(int i = 0; i < sLen; i++)
+            alphabet[str.charAt(i)-'a']++;
+
+        outer : for(int i = 0; i < sLen; i++){
+            if(alphabet[str.charAt(i)-'a'] == 1) {
+                index = i;
+                break outer;
+            }
+        }
+        return str.charAt(index);
     }
     public static int firstNonRepeatedChar(String s){
         //First Non-Repeated Character in the string
@@ -388,6 +397,9 @@ public class Mroads {
         return new String(c);
     }
     public static Map<String,List<String>> groupAnagramm(List<String> list) {
+//        6. From a list of strings, group the anagrams together
+//        Input : [“eat”, “tea”, “ate”, “bat”, “tab”, “nab”]
+//        Output : [[“nab”], [“bat”,”tab”], [“eat”,”ate”,”tea”]]
         Map<String,List<String>> map = new HashMap<>();
         int size = list.size();
 
@@ -406,6 +418,7 @@ public class Mroads {
         return map;
     }
     public static List<Character> pangram(String s) {
+       // a sentence or verse that contains all the letters of the alphabet
         int arr[] = new int[26];
         int sLen = s.length();
         for(int i = 0; i < sLen; i++) {
@@ -438,7 +451,7 @@ public class Mroads {
     }
     //Reversing  String
     public static String reverse(String s){
-
+//        i.  Reversing  String
         StringBuilder str = new StringBuilder();
         int strLen = s.length();
 
@@ -448,6 +461,7 @@ public class Mroads {
         return str.toString();
     }
     public static String numberToRoman(int number) {
+        //vi. Decimal Conversion problem
         String I[] = {"","I","II","III","IV","V","VI","VII","VIII","IX"};
         String X[] = {"","X","XX","XXX","XL","L","LX","LXX","LXXX","XC"};
         String C[] = {"","C","CC","CCC","CD","D","DC","DCC","DCCC","CM"};
@@ -456,7 +470,9 @@ public class Mroads {
         return M[number/1000] + C[(number%1000)/100] +
                 X[(number%100)/10] + I[(number)%10];
     }
+
     public static int romanToNumber(String s) {
+        //vi. Decimal Conversion problem
         Map<Character,Integer> map = new HashMap<>();
         map.put('I',1); map.put('V',5); map.put('X',10);
         map.put('C',100); map.put('L',50); map.put('M',1000);
