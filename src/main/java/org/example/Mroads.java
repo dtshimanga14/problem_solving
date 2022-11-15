@@ -38,14 +38,41 @@ public class Mroads {
         }};
         int arr[] = {13,4,5,1,2,12,12,12,4,5,2};
         int coins[] = {1,4,3,2};
-        System.out.println(cheapestPrice(prices));
-        System.out.println(commonWord("hello world hello world world world"));
-        System.out.println(leastRecentOccurence(arr));
-        System.out.println(changeCoin(coins,7));
-        StringBuilder s = new StringBuilder("hello");
-        System.out.println(shortestPalindrome("helzoz"));
-        //  menm
-        System.out.println(removeDuplicate(arr));
+//        System.out.println(cheapestPrice(prices));
+//        System.out.println(commonWord("hello world hello world world world"));
+//        System.out.println(leastRecentOccurence(arr));
+//        System.out.println(changeCoin(coins,7));
+//        StringBuilder s = new StringBuilder("hello");
+//        System.out.println(shortestPalindrome("helzoz"));
+//        //  menm
+//        System.out.println(removeDuplicate(arr));
+//        WeightedGraph weightedGraph = new WeightedGraph();
+//        WeightedGraph.Vertex v1 = new WeightedGraph.Vertex("USD");
+//        WeightedGraph.Vertex v2 = new WeightedGraph.Vertex("INR");
+//        v1.addEdge(v2,12.0);
+        printArray(pascalTriangle(4));
+    }
+
+    public static int[][] pascalTriangle(int n){
+        int arr[][] = new int[n+1][n+1];
+        for(int i = 0; i <= n; i++){
+            for(int j = 0; j <= i; j++){
+                arr[i][j] = combination(i,j);
+            }
+        }
+        return arr;
+    }
+    public static int combination(int n, int p){
+        return factoriel(n)/(factoriel(n-p)*factoriel(p));
+    }
+    public static int factoriel(int n){
+        int arr[] = new int[n+1];
+        arr[0] = 1;
+
+        for(int i = 1; i <= n; i++){
+            arr[i] = i*arr[i-1];
+        }
+        return arr[n];
     }
     public static List<Integer> removeDuplicate(int arr[]){
         Set<Integer> set = new HashSet<>();
@@ -310,8 +337,8 @@ public class Mroads {
 
         return students[best];
     }
-    //First Non-Repeated Character in the string
     public static int firstNonRepeatedChar(String s){
+        //First Non-Repeated Character in the string
         int sLen = s.length();
         int arr[] = new int[26];
 
@@ -332,7 +359,11 @@ public class Mroads {
     }
     // Longest uniform substrings
     public static List<Integer> getLongestUniformSubStr(String s) {
-
+        //iv.  Longest uniform substrings
+//        7. Find the starting position and the length of the longest uniform
+//        substring from a string.
+//                input: "abbbbccddd"
+//        output : [1, 4]
         int sLen = s.length();
         int start = 0; int end = 0;
         int currStart = 0; int currEnd = 0;
@@ -498,6 +529,15 @@ public class Mroads {
             temp.add(arr[index]);
             map.put(1,temp);
             return helper(arr, 0, index + 1, max, temp,map);
+        }
+    }
+    public static void printArray(int arr[][]){
+        int arrLen = arr.length;
+        for(int i = 0; i < arrLen; i++){
+            for(int j = 0; j < arrLen; j++){
+                System.out.print(" "+ arr[i][j]);
+            }
+            System.out.println();
         }
     }
 //    Given a list of currency exchange rates like this:
